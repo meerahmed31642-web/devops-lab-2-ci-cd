@@ -21,6 +21,16 @@ pipeline {
                 sh 'docker images'
             }
         }
-
+stage('Deploy Container') {
+    steps {
+        sh '''
+            docker rm -f flask-container || true
+            docker run -d \
+              --name flask-container \
+              -p 5000:5000 \
+              flask-app
+        '''
+    }
+}
     }
 }
